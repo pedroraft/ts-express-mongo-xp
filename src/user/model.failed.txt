@@ -1,0 +1,25 @@
+/*import {Model, model, schema, SchemaField} from "@decorators/mongoose";
+
+@Model('User')
+class User {
+    @SchemaField(String)
+    username: string;
+
+    @SchemaField(String)
+    email: string;
+
+    @SchemaField(String)
+    password: string;
+
+    @SchemaField(String)
+    role: string;
+}
+
+interface User extends Document{}
+
+
+export const UserModel: UserType = model(User);*/
+
+// This type is also necessary to have all needed methods and properties of mongoose
+// plus all static methods and properties of Animal class
+// type UserType = mongoose.Model<User> & typeof User;
