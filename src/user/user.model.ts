@@ -20,27 +20,18 @@ const UserSchema = new mongoose.Schema({
     role: String
 });
 
-// Before saving the user, hash the password
-UserSchema.pre('save', function (next) {
-    const user = this;
-    if (!user.isModified('password')) {
-        return next();
+UserSchema.pre('save', async (next) => {
+    try {
+        const user = this;
+        if (!user.isModified('password')) return next();
+        user.password = await bcrypt.hash(user.password.trim(), await bcrypt.genSalt(10));
+        next();
+    } catch (e) {
+        return next(e);
     }
-    bcrypt.genSalt(10, function (err, salt) {
-        if (err) {
-            return next(err);
-        }
-        bcrypt.hash(user.password, salt, function (error, hash) {
-            if (error) {
-                return next(error);
-            }
-            user.password = hash;
-            next();
-        });
-    });
 });
 
-UserSchema.methods.comparePassword = function (candidatePassword): boolean {
+UserSchema.methods.comparePassword = (candidatePassword): boolean => {
     return bcrypt.compare(candidatePassword, this.password);
 };
 
