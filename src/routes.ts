@@ -9,6 +9,7 @@ export default function setRoutes(app) {
     attachControllers(app, [
         AuthController
     ]);
+
     setRestify(router);
     app.use(router);
 }
