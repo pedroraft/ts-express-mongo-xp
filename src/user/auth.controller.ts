@@ -8,19 +8,19 @@ import AuthMiddleware from "../middleware/auth.middleware";
 @Injectable()
 export class AuthController {
 
-    @Post('')
-    async login(@Response() res, @Body('email') email: string, @Body('password')  password: string) {
-        const user = await UserModel.findOne({email: email});
-        if (!user || !user.comparePassword(password)) {
-            return res.sendStatus(403);
-        }
-        const token = jwt.sign({user: user}, process.env.SECRET_TOKEN);
-        res.status(200).json({token: token});
+  @Post('')
+  async login(@Response() res, @Body('email') email: string, @Body('password')  password: string) {
+    const user = await UserModel.findOne({email: email});
+    if (!user || !user.comparePassword(password)) {
+      return res.sendStatus(403);
     }
+    const token = jwt.sign({user: user}, process.env.SECRET_TOKEN);
+    res.status(200).json({token: token});
+  }
 
-    // just check if token is valid
-    @Get('', [AuthMiddleware])
-    checkAuth(@Response() res) {
-        res.status(200).json();
-    }
+  // just check if token is valid
+  @Get('', [AuthMiddleware])
+  checkAuth(@Response() res) {
+    res.status(200).json();
+  }
 }

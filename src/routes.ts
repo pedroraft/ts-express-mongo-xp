@@ -4,12 +4,12 @@ import {attachControllers} from "@decorators/express";
 import setRestify from "./restify";
 
 export default function setRoutes(app) {
-    const router = express.Router();
+  const router = express.Router();
 
-    attachControllers(app, [
-        AuthController
-    ]);
+  attachControllers(app, [
+    AuthController
+  ]);
 
-    setRestify(router);
-    app.use(router);
+  setRestify(router);
+  app.use(router);
 }

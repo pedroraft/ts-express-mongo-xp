@@ -7,14 +7,17 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es6",
+    "target": "ESNext",
     "typeRoots": [
       "node_modules/@types",
       "src/typings"
     ],
     "lib": [
       "es2017",
-      "dom"
+      "esnext",
+      "esnext.asynciterable",
+      "dom",
+      "dom.iterable"
     ]
   }
 }

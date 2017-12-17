@@ -24,4 +24,4 @@ mongoose.connect(mongodbURI, {useMongoClient: true});
 
 setRoutes(app);
 app.listen(port, () =>
-    console.log(`Connected to MongoDB on: ${mongodbURI}, Running on: http://localhost:${port}`));
+  console.log(`Connected to MongoDB on: ${mongodbURI}, Running on: http://localhost:${port}`));
