@@ -1,15 +1,17 @@
 import * as express from 'express';
 import {AuthController} from "./user/auth.controller";
 import {attachControllers} from "@decorators/express";
-import setRestify from "./restify";
+import {Restify} from "./restify";
 
-export default function setRoutes(app) {
-  const router = express.Router();
+export class Routes {
+  static setRoutes(app: express.Express) {
+    const router = express.Router();
 
-  attachControllers(app, [
-    AuthController
-  ]);
+    attachControllers(app, [
+      AuthController
+    ]);
 
-  setRestify(router);
-  app.use(router);
+    Restify.setRestify(router);
+    app.use(router);
+  }
 }
