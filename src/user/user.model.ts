@@ -1,6 +1,11 @@
 import {instanceMethod, InstanceType, pre, prop, Typegoose} from "typegoose";
 import * as bcrypt from 'bcryptjs';
 
+enum Role {
+  ADMIN = 'admin',
+  REGULAR = 'regular',
+}
+
 @pre<User>('save', async function (next) {
   try {
     const user = this;
@@ -14,19 +19,16 @@ import * as bcrypt from 'bcryptjs';
 })
 
 export class User extends Typegoose {
-  @prop()
-  name?: string;
-
-  @prop()
+  @prop({unique: true, required: true})
   username?: string;
 
-  @prop({unique: true})
+  @prop({unique: true, required: true})
   email?: string;
 
   @prop()
   password?: string;
 
-  @prop()
+  @prop({enum: Role, default: Role.REGULAR})
   role?: string;
 
   @instanceMethod
@@ -34,5 +36,6 @@ export class User extends Typegoose {
     return bcrypt.compare(candidatePassword, this.password);
   }
 }
+
 
 export const UserModel = new User().getModelForClass(User);

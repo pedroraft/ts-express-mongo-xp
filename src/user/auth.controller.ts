@@ -11,9 +11,7 @@ export class AuthController {
   @Post('')
   async login(@Response() res, @Body('email') email: string, @Body('password')  password: string) {
     const user = await UserModel.findOne({email: email});
-    if (!user || !user.comparePassword(password)) {
-      return res.sendStatus(403);
-    }
+    if (!user || !user.comparePassword(password)) return res.sendStatus(403);
     const token = jwt.sign({user: user}, process.env.SECRET_TOKEN);
     res.status(200).json({token: token});
   }
