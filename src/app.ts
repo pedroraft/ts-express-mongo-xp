@@ -5,6 +5,7 @@ import * as morgan from 'morgan';
 import * as bodyParser from "body-parser";
 import * as mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
+import * as helmet from 'helmet';
 import {Routes} from "./routes";
 
 export class App {
@@ -22,14 +23,8 @@ export class App {
     (<any>mongoose).Promise = global.Promise;
     const mongodbURI = this.isProduction ? process.env.MONGODB_URI : process.env.MONGODB_DEV_URI;
     mongoose.connect(mongodbURI, {useMongoClient: true});
-
-    mongoose.connection.on("connected", () => {
-      console.log(`[*] Connected to database ${mongodbURI}`);
-    });
-
-    mongoose.connection.on("error", (err: Error): void => {
-      console.log("[-] Database error: " + err);
-    });
+    mongoose.connection.on("connected", () => console.log(`[*] Connected to database ${mongodbURI}`));
+    mongoose.connection.on("error", (err: Error): void => console.log("[-] Database error: " + err));
   }
 
   private initServer(): void {
@@ -42,5 +37,6 @@ export class App {
     this.expressApp.use(compression());
     this.expressApp.use(morgan(this.isProduction ? 'combined' : 'dev'));
     this.expressApp.use(bodyParser.json());
+    this.expressApp.use(helmet())
   }
 }
