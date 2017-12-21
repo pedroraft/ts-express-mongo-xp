@@ -1,5 +1,7 @@
 import * as restify from 'express-restify-mongoose';
 import {UserModel} from "./user/user.model";
+import AuthMiddleware from "./middleware/auth.middleware";
+
 //import {Post, Comment} from "./post/post.model";
 
 export class Restify {
@@ -8,10 +10,7 @@ export class Restify {
       prefix: '/api',
       version: '',
       private: ['__v'],
-      /*        preMiddleware: (req, res, next) => {
-                  const authMiddleware = new AuthMiddleware();
-                  authMiddleware.use(req, res, next)
-              }*/
+      preMiddleware: (req, res, next) => new AuthMiddleware().use(req, res, next)
     });
 
     restify.serve(router, UserModel, {

@@ -23,8 +23,8 @@ export class App {
     (<any>mongoose).Promise = global.Promise;
     const mongodbURI = this.isProduction ? process.env.MONGODB_URI : process.env.MONGODB_DEV_URI;
     mongoose.connect(mongodbURI, {useMongoClient: true});
-    mongoose.connection.on("connected", () => console.log(`[*] Connected to database ${mongodbURI}`));
-    mongoose.connection.on("error", (err: Error): void => console.log("[-] Database error: " + err));
+    mongoose.connection.on("connected", () => console.log(`Connected to database ${mongodbURI}`));
+    mongoose.connection.on("error", (err) => console.log(`Database error: ${err}`));
   }
 
   private initServer(): void {
