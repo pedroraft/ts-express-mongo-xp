@@ -1,8 +1,7 @@
 import * as restify from 'express-restify-mongoose';
 import {UserModel} from "./user/user.model";
 import AuthMiddleware from "./middleware/auth.middleware";
-
-//import {Post, Comment} from "./post/post.model";
+import {PostModel} from "./post/post.model";
 
 export class Restify {
   static setRestify(router) {
@@ -17,7 +16,6 @@ export class Restify {
       private: ['password', '__v']
     });
 
-    //restify.serve(router, Post);
-    //restify.serve(router, Comment);
+    restify.serve(router, PostModel);
   }
 }
